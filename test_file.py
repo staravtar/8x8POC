@@ -1,14 +1,22 @@
 import pytest
 from page import TestPage
 from assertionsClass import Assertions
+from testdata import TestData as td
 
 
 class Test:
     ts = TestPage()
     assertion = Assertions()
 
-    def test_1(self):
-        self.ts.scenario1_login()
+    @pytest.mark.login
+    def test_login(self):
+        self.ts.login()
 
-    def test_2(self):
-        self.ts.scenario1_login()
+    @pytest.mark.join_call
+    def test_join_call(self):
+        self.ts.join_call()
+
+    @pytest.mark.sync_calender
+    def test_sync_calender(self):
+        self.ts.calender_sync()
+

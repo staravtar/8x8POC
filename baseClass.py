@@ -25,13 +25,22 @@ class SeleniumWebdriverBase:
     """
 
     def setup(self):
+        opt = Options()
         """
         setup webdriver
-        :param none
-        """
-        self.driver = webdriver.Chrome(executable_path="./chromedriver77.exe")
+        :param none"""
+        # Pass the argument 1 to allow and 2 to block
+        opt.add_experimental_option("prefs", { \
+            "profile.default_content_setting_values.media_stream_mic": 1,
+            "profile.default_content_setting_values.media_stream_camera": 1,
+            "profile.default_content_setting_values.geolocation": 1,
+            "profile.default_content_setting_values.notifications": 1})
+
+        self.driver = webdriver.Chrome(chrome_options=opt, executable_path="./chromedriver77.exe")
         self.driver.get(self.BASE_URL)
+        self.driver.implicitly_wait(30)
         title = self.driver.title
+        self.driver.maximize_window()
 
     def teardown(self):
         """
@@ -489,3 +498,11 @@ class SeleniumWebdriverBase:
         # self.driver.find_element_by_css_selector(locator).send_keys(Keys.END)
         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         self.pause(1)
+
+    def switch_to_window(self, window_index):
+        win_handl = self.driver.window_handles
+        open_win = [win for win in win_handl]
+        self.driver.switch_to.window(open_win[window_index])
+
+    def open_new_tab(self):
+        self.driver.execute_script("window.open('');")
