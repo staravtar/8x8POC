@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-'''
-Created on July 9, 2018
-
-@author: rkaur
-'''
-
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from baseClass import SeleniumWebdriverBase

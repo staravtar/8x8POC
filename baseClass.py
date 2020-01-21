@@ -1,16 +1,9 @@
-"""
-Created on July 10, 2018
-
-@author: rkaur
-"""
-
 import time
 import unittest
 import os
 import re
 import datetime
 
-from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 from selenium import webdriver
@@ -18,15 +11,11 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver import ActionChains
-from selenium.webdriver.remote.webelement import WebElement
-from webtestlib.settings.web import BaseWebSettings
-from webtestlib.core.ui.urls import URLs
+
 from selenium.webdriver.chrome.options import Options
 
 
-class SeleniumWebdriverBase():
-
-
+class SeleniumWebdriverBase:
     BY_NAME = "name"
     BY_CSSLOCATOR = "css_locator"
     BY_ID = "id"
@@ -34,13 +23,13 @@ class SeleniumWebdriverBase():
     """
     Setup Browser type
     """
-    driver = webdriver.Chrome(executable_path="./chromedriver77.exe")
 
     def setup(self):
         """
         setup webdriver
         :param none
         """
+        self.driver = webdriver.Chrome(executable_path="./chromedriver77.exe")
         self.driver.get(self.BASE_URL)
         title = self.driver.title
 
