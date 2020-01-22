@@ -89,4 +89,37 @@ class TestPage(Assertions):
         self.delete_calender_sync()
         self.teardown()
 
+    def fetch_webrtc_data(self):
+        '''As a pre requisite only use a meeting link in which more than 1 person is already available'''
+        meetingurl = self.read_data_fromfile("TestDataSection","meeting_url")
+        print(meetingurl)
+        self.open_custom_uri(meetingurl)
+        self.pause(10)
+        self.typeTextByXPath(self.read_data_fromfile("TestDataSection","joynee_name"), td.enter_name_meeting_joining_xpath)
+        self.clickElementByXPATH(td.button_to_setName)
+        self.pause(5)
+        self.open_new_tab()
+        self.switch_to_window(1)
+        self.pause(3)
+        self.openURL(td.webrtc_url)
+        self.pause(5)
+        self.clickElementByXPATH(td.audiosourcehead)
+        self.pause(2)
+        audLEVEL = self.get_element_text_byindex_xpath(td.tab_audio_level,0)
+        print(audLEVEL)
+        self.update_data_in_testdatafile("TestDataSection","AUDIOLEVEL",audLEVEL)
+        self.pause(2)
+        self.clickElementByXPATH(td.videosourcehead)
+        self.pause(2)
+        vdoheight = self.get_element_text_byindex_xpath(td.tab_video_height,0)
+        print(vdoheight)
+        self.update_data_in_testdatafile("TestDataSection", "VIDEOHEIGHT", vdoheight)
+        vdoweight = self.get_element_text_byindex_xpath(td.tab_video_width, 0)
+        print(vdoweight)
+        self.update_data_in_testdatafile("TestDataSection", "VIDEOWIDTH", vdoweight)
+        self.switch_to_window(0)
+
+        self.teardown()
+
+
 

@@ -11,7 +11,7 @@ class TestData:
     button_to_setName = "//button[@class='sc-bwzfXH iuZaWk']"
     user_name = "ayush.andalpha@gmail.com"
     password = "Tester@123"
-    user_name_1 = "kamlesh.papnoi@reviverauto.com"
+    user_name_1 = "ayush.andprod@gmail.com"
 
     # Home page locators
     join_button_xpath = "//div[@class='sc-LKuAh AkHBX'][1]"
@@ -43,5 +43,16 @@ class TestData:
 
     meeting_title = "demo_"+str(current_hour)
     meeting_title_homepage_xpath = "//div[text()="+meeting_title+"]"
+
+    #WEBRTC LOCATORS
+    webrtc_url = "chrome://webrtc-internals/"
+    tab_heads_xpath = "//span[@class='tab-head']"
+    audiosourcehead = "//summary[contains(text(),'RTCAudioSource')]"
+    tab_audio_level = "//tr[contains(@id,'audioLevel')]/td[2]"
+    videosourcehead = "//summary[contains(text(),'RTCVideoSource')]"
+    tab_video_width = "//tr[contains(@id,'RTCVideoSource')][4]/td[2]"
+    tab_video_height = "//tr[contains(@id,'RTCVideoSource')][5]/td[2]"
+
+
 
 
