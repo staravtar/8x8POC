@@ -13,6 +13,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver import ActionChains
 
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.remote.webelement import WebElement
 from configparser import ConfigParser
 
 
@@ -51,7 +52,7 @@ class SeleniumWebdriverBase:
 
         self.driver.quit()
 
-    def open_custom_uri(self,uri):
+    def open_custom_uri(self, uri):
 
         opt = Options()
         opt.add_argument("--disable-infobars")
@@ -64,7 +65,7 @@ class SeleniumWebdriverBase:
             "profile.default_content_setting_values.geolocation": 1,
             "profile.default_content_setting_values.notifications": 1
         })
-        self.driver = webdriver.Chrome(executable_path="./chromedriver77.exe",options=opt,)
+        self.driver = webdriver.Chrome(executable_path="./chromedriver77.exe", options=opt, )
         self.driver.get(uri)
         title = self.driver.title
 
@@ -142,13 +143,14 @@ class SeleniumWebdriverBase:
         """
         self.driver.execute_async_script(self.driver, "doFireEvent", element, "mouseup")
 
-    def mouseHover(self, element):
+    def mouseHoverUsingXpath(self, xpath):
         """
         Calls mouse hover using actions
         :param element - Web Element
         """
+        element = self.driver.find_elements_by_xpath(xpath=xpath)
         actionChains = ActionChains(self.driver)
-        actionChains.move_to_element(element)
+        actionChains.move_to_element(WebElement(element))
         actionChains.perform()
 
     def mouseHoverByCss(self, locator):
@@ -515,6 +517,26 @@ class SeleniumWebdriverBase:
     def open_new_tab(self):
         self.driver.execute_script("window.open('');")
 
+    def getElementsByXpath(self, xpath):
+        elements = self.driver.find_elements_by_xpath(xpath)
+        print('The found table elements are: ')
+        print(elements)
+        return elements
+
+    def switch_to_iframe_using_css(self, css):
+        element = self.driver.find_element_by_css_selector(css)
+        self.driver.switch_to.frame(element)
+
+    def getElementTextByXpath(self, xpath):
+            """
+            get element text by xpath
+           :param -  id
+           """
+            element = self.driver.find_element_by_xpath(xpath)
+            actualText = element.text
+            print("text is actual Text: {}".format(actualText))
+            return actualText
+          
     def read_data_fromfile(self,section,key):
         configr = ConfigParser()
         configr.read("./datahelper.ini")

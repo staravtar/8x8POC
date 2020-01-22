@@ -56,7 +56,7 @@ class TestPage(Assertions):
         self.clickElementByXPATH(td.terms_checkbox_xpath)
         self.clickElementByXPATH(td.link_google_acc_xpath)
         self.pause(6)
-        self.typeTextByXPath(td.user_name_1, td.gmail_email_input_xpath)
+        self.typeTextByXPath(td.user_name, td.gmail_email_input_xpath)
         self.clickElementByXPATH(td.gmail_email_next_xpath)
         self.pause(3)
         self.typeTextByXPath(td.password, td.gmail_pwd_xpath)
@@ -75,7 +75,6 @@ class TestPage(Assertions):
         self.pause(6)
         self.clickElementByXPATH(td.create_btn_xpath)
         self.pause(4)
-        #self.driver.find_element_by_xpath(td.add_title_xpath).send_keys('abc')
         self.typeTextByXPath(td.meeting_title, td.add_title_xpath)
         self.pause(2)
         self.clickElementByXPATH(td.save_button)
@@ -89,6 +88,35 @@ class TestPage(Assertions):
         self.delete_calender_sync()
         self.teardown()
 
+    def get_connection_info(self):
+        self.setup()
+        self.pause(8)
+        self.clickElementByXPATH(td.Log_in_button_xpath)
+        self.typeTextByXPath(td.user_name, td.Email_box_xpath)
+        self.pause(2)
+        self.typeTextByXPath(td.password, td.Pwd_box_xpath)
+        self.clickElementByXPATH(td.log_in_xpath)
+        self.pause(8)
+        self.clickElementByXPATH(td.start_button_xpath)
+        self.pause(15)
+        self.switch_to_iframe_using_css(td.iframe_css)
+        self.pause(2)
+        self.clickElementByXPATH(td.my_call_box_xpath)
+        self.pause(3)
+        self.clickElementByXPATH(td.states_icon_xpath)
+        self.pause(2)
+        connection_level = self.getElementTextByXpath(td.connection_xpath)
+        self.pause(1)
+        bitrate = self.getElementTextByXpath(td.bitrate_xpath)
+        self.pause(1)
+        packet_loss = self.getElementTextByXpath(td.packet_loss_xpath)
+        self.pause(1)
+        resolution = self.getElementTextByXpath(td.resolution_xpath)
+        self.pause(1)
+        frame_rate = self.getElementTextByXpath(td.frame_rate_xpath)
+        self.pause(1)
+        self.teardown()
+        
     def fetch_webrtc_data(self):
         '''As a pre requisite only use a meeting link in which more than 1 person is already available'''
         meetingurl = self.read_data_fromfile("TestDataSection","meeting_url")
@@ -120,6 +148,4 @@ class TestPage(Assertions):
         self.switch_to_window(0)
 
         self.teardown()
-
-
 

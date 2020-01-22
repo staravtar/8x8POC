@@ -36,10 +36,23 @@ class TestData:
     gmail_accept_xpath = "//input[@type='submit' and @value= 'Accept']"
     no_schedule_event_xpath = "//li[text()='No scheduled events']"
 
-    current_hour = datetime.today().time().hour
+    current_hour = datetime.today().time().microsecond
     create_btn_xpath = "//div[text()='Create']"
     add_title_xpath = "//input[@type='text' and @aria-label='Add title']"
     save_button = "//span[text()='Save']"
+
+    meeting_title = "demo_" + str(current_hour)
+    meeting_title_homepage_xpath = "//div[text()=" + meeting_title + "]"
+
+    my_call_box_xpath = "//span[text()='ayush.andalpha@gmail.com (me)']"
+    states_icon_xpath = "//div[@class='indicator-container show-connection-indicator' and @id]"
+    connection_info_container_xpath = "//table[@class='connection-info__container]"
+    iframe_css = "iframe#jitsiConferenceFrame0"
+    connection_xpath = "//table[@class='connection-info__container']/tbody/tr[1]/td[2]"
+    bitrate_xpath = "//table[@class='connection-info__container']/tbody/tr[2]/td[2]"
+    packet_loss_xpath = "//table[@class='connection-info__container']/tbody/tr[3]/td[2]"
+    resolution_xpath = "//table[@class='connection-info__container']/tbody/tr[4]/td[2]"
+    frame_rate_xpath = "//table[@class='connection-info__container']/tbody/tr[5]/td[2]"
 
     meeting_title = "demo_"+str(current_hour)
     meeting_title_homepage_xpath = "//div[text()="+meeting_title+"]"
@@ -52,6 +65,7 @@ class TestData:
     videosourcehead = "//summary[contains(text(),'RTCVideoSource')]"
     tab_video_width = "//tr[contains(@id,'RTCVideoSource')][4]/td[2]"
     tab_video_height = "//tr[contains(@id,'RTCVideoSource')][5]/td[2]"
+
 
 
 
