@@ -20,3 +20,7 @@ class Test:
     def test_sync_calender(self):
         self.ts.calender_sync()
 
+    @pytest.mark.rtc_data_check
+    def test_check_webRTC_Data(self):
+        self.ts.fetch_webrtc_data()
+

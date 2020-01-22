@@ -13,6 +13,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver import ActionChains
 
 from selenium.webdriver.chrome.options import Options
+from configparser import ConfigParser
 
 
 class SeleniumWebdriverBase:
@@ -277,8 +278,15 @@ class SeleniumWebdriverBase:
         """
         print("click on xpath " + path)
 
+        actions = ActionChains(self.driver)
+
+
         if (path != "none"):
-            self.driver.find_element_by_xpath(path).click()
+
+            elements = self.driver.find_elements_by_xpath(path)
+            actions.move_to_element(elements[0])
+            actions.click(elements[0])
+            actions.perform()
 
     def openURL(self, url):
         """
@@ -506,3 +514,21 @@ class SeleniumWebdriverBase:
 
     def open_new_tab(self):
         self.driver.execute_script("window.open('');")
+
+    def read_data_fromfile(self,section,key):
+        configr = ConfigParser()
+        configr.read("./datahelper.ini")
+        return configr.get(section,key)
+
+    def update_data_in_testdatafile(self,section,key,value):
+        parser = ConfigParser()
+        parser.read("./datahelper.ini")
+        parser.set(section,key,value)
+        files = open("./datahelper.ini",'w+')
+        parser.write(files)
+        files.close()
+
+    def get_element_text_byindex_xpath(self,locator,index):
+        elements = self.driver.find_elements_by_xpath(locator)
+
+        return elements[index].text
