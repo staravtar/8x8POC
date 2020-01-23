@@ -65,6 +65,8 @@ class TestData:
     videosourcehead = "//summary[contains(text(),'RTCVideoSource')]"
     tab_video_width = "//tr[contains(@id,'RTCVideoSource')][4]/td[2]"
     tab_video_height = "//tr[contains(@id,'RTCVideoSource')][5]/td[2]"
+    VideoOutboundhead = "//summary[contains(text(),'RTCOutboundRTPVideoStream')]"
+    tab_videobytes_persec = "//tr[contains(@id,'RTCOutboundRTPVideoStream')][19]/td[2]"
 
 
 
