@@ -24,6 +24,7 @@ class Test:
     def test_check_webRTC_Data(self):
         self.ts.fetch_webrtc_data()
 
+
     @pytest.mark.audio_video_quality
     def test_audio_video(self):
         self.ts.get_audio_video_quality()
