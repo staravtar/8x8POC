@@ -145,6 +145,12 @@ class TestPage(Assertions):
         vdoweight = self.get_element_text_byindex_xpath(td.tab_video_width, 0)
         print(vdoweight)
         self.update_data_in_testdatafile("TestDataSection", "VIDEOWIDTH", vdoweight)
+        self.pause(2)
+        self.clickElementByXPATH(td.VideoOutboundhead)
+        vdobitrate = self.get_element_text_byindex_xpath(td.tab_videobytes_persec, 0)
+        print(vdobitrate)
+        self.update_data_in_testdatafile("TestDataSection", "VIDEOBITRATE", vdobitrate)
+        self.pause(2)
         self.switch_to_window(0)
 
         self.teardown()
