@@ -17,6 +17,7 @@ class TestPage(Assertions):
         self.teardown()
 
     def join_call(self):
+        """This will join the call from available meeting"""
         self.setup()
         self.pause(8)
         self.clickElementByXPATH(td.Log_in_button_xpath)
@@ -25,8 +26,11 @@ class TestPage(Assertions):
         self.clickElementByXPATH(td.log_in_xpath)
         self.pause(10)
         self.clickElementByXPATH(td.join_button_xpath)
-        self.pause(10)
-        self.isElementPresentByXPATH(td.large_video_xpath)
+        self.pause(15)
+        self.switch_to_iframe_using_css(td.iframe_css)
+        self.pause(2)
+        is_large_video = self.isElementPresentByXPATH(td.large_video_xpath)
+        assert True == is_large_video
         self.teardown()
 
     def delete_calender_sync(self):
@@ -68,7 +72,7 @@ class TestPage(Assertions):
         self.pause(5)
         self.switch_to_window(0)
         self.pause(2)
-        self.isElementPresentByXPATH(td.no_schedule_event_xpath)
+        is_event_present = self.isElementPresentByXPATH(td.no_schedule_event_xpath)
         self.open_new_tab()
         self.switch_to_window(1)
         self.open_url()
@@ -83,14 +87,15 @@ class TestPage(Assertions):
         self.pause(2)
         self.refresh()
         self.pause(5)
-        self.isElementPresentByXPATH(td.meeting_title_homepage_xpath)
+        is_title_present = self.isElementPresentByXPATH(td.meeting_title_homepage_xpath)
         self.pause(2)
         self.delete_calender_sync()
+        assert True == is_event_present
+        assert True == is_title_present
         self.teardown()
 
     def get_connection_info(self):
-        self.setup()
-        self.pause(8)
+        """This function will get the connection info and save the values"""
         self.clickElementByXPATH(td.Log_in_button_xpath)
         self.typeTextByXPath(td.user_name, td.Email_box_xpath)
         self.pause(2)
@@ -115,15 +120,16 @@ class TestPage(Assertions):
         self.pause(1)
         frame_rate = self.getElementTextByXpath(td.frame_rate_xpath)
         self.pause(1)
-        self.teardown()
-        
+        return connection_level, bitrate, packet_loss, resolution, frame_rate
+
     def fetch_webrtc_data(self):
         '''As a pre requisite only use a meeting link in which more than 1 person is already available'''
-        meetingurl = self.read_data_fromfile("TestDataSection","meeting_url")
+        meetingurl = self.read_data_fromfile("TestDataSection", "meeting_url")
         print(meetingurl)
         self.open_custom_uri(meetingurl)
         self.pause(10)
-        self.typeTextByXPath(self.read_data_fromfile("TestDataSection","joynee_name"), td.enter_name_meeting_joining_xpath)
+        self.typeTextByXPath(self.read_data_fromfile("TestDataSection", "joynee_name"),
+                             td.enter_name_meeting_joining_xpath)
         self.clickElementByXPATH(td.button_to_setName)
         self.pause(5)
         self.open_new_tab()
@@ -133,13 +139,13 @@ class TestPage(Assertions):
         self.pause(5)
         self.clickElementByXPATH(td.audiosourcehead)
         self.pause(2)
-        audLEVEL = self.get_element_text_byindex_xpath(td.tab_audio_level,0)
+        audLEVEL = self.get_element_text_byindex_xpath(td.tab_audio_level, 0)
         print(audLEVEL)
-        self.update_data_in_testdatafile("TestDataSection","AUDIOLEVEL",audLEVEL)
+        self.update_data_in_testdatafile("TestDataSection", "AUDIOLEVEL", audLEVEL)
         self.pause(2)
         self.clickElementByXPATH(td.videosourcehead)
         self.pause(2)
-        vdoheight = self.get_element_text_byindex_xpath(td.tab_video_height,0)
+        vdoheight = self.get_element_text_byindex_xpath(td.tab_video_height, 0)
         print(vdoheight)
         self.update_data_in_testdatafile("TestDataSection", "VIDEOHEIGHT", vdoheight)
         vdoweight = self.get_element_text_byindex_xpath(td.tab_video_width, 0)
@@ -152,6 +158,11 @@ class TestPage(Assertions):
         self.update_data_in_testdatafile("TestDataSection", "VIDEOBITRATE", vdobitrate)
         self.pause(2)
         self.switch_to_window(0)
-
         self.teardown()
 
+    def get_audio_video_qulity(self):
+        self.setup()
+        self.pause(8)
+        resolution, frame_rate = self.get_connection_info()
+        assert str(resolution) != "N/A"
+        assert str(frame_rate) != "N/A"
