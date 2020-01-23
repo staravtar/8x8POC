@@ -282,9 +282,7 @@ class SeleniumWebdriverBase:
 
         actions = ActionChains(self.driver)
 
-
         if (path != "none"):
-
             elements = self.driver.find_elements_by_xpath(path)
             actions.move_to_element(elements[0])
             actions.click(elements[0])
@@ -427,7 +425,7 @@ class SeleniumWebdriverBase:
         actualText = element.text
         return actualText
 
-    def getAttrribute(self, locator, attribute):
+    def getAttrributeByCss(self, locator, attribute):
         """
        Verify element attribute
        :param - attribute
@@ -437,6 +435,20 @@ class SeleniumWebdriverBase:
             elementAttribute = element.get_attribute(attribute)
             return elementAttribute
         except:
+            return "Attribute not found"
+
+    def getAttrributeByXpath(self, xpath, attribute):
+        """
+       Verify element attribute
+       :param - attribute
+       """
+        try:
+            element = self.driver.find_elements_by_xpath(xpath)
+            elementAttribute = element.get_attribute(attribute)
+            print("Attribute value is : {}".format(elementAttribute))
+            return elementAttribute
+        except:
+            print("In getAttrributeByXpath exception occure")
             return "Attribute not found"
 
     def selectDropDownItem(self, item, locator):
@@ -513,6 +525,7 @@ class SeleniumWebdriverBase:
         win_handl = self.driver.window_handles
         open_win = [win for win in win_handl]
         self.driver.switch_to.window(open_win[window_index])
+        print("Driver is switched to window index : {}".format(window_index))
 
     def open_new_tab(self):
         self.driver.execute_script("window.open('');")
@@ -526,31 +539,37 @@ class SeleniumWebdriverBase:
     def switch_to_iframe_using_css(self, css):
         element = self.driver.find_element_by_css_selector(css)
         self.driver.switch_to.frame(element)
+        print("driver switched to iframe using css :  {} ".format(css))
 
     def getElementTextByXpath(self, xpath):
-            """
-            get element text by xpath
-           :param -  id
-           """
-            element = self.driver.find_element_by_xpath(xpath)
-            actualText = element.text
-            print("text is actual Text: {}".format(actualText))
-            return actualText
-          
-    def read_data_fromfile(self,section,key):
+        """
+        get element text by xpath
+       :param -  id
+       """
+        element = self.driver.find_element_by_xpath(xpath)
+        actualText = element.text
+        print("text is actual Text: {}".format(actualText))
+        return actualText
+
+    def read_data_fromfile(self, section, key):
         configr = ConfigParser()
         configr.read("./datahelper.ini")
-        return configr.get(section,key)
+        return configr.get(section, key)
 
-    def update_data_in_testdatafile(self,section,key,value):
+    def update_data_in_testdatafile(self, section, key, value):
         parser = ConfigParser()
         parser.read("./datahelper.ini")
-        parser.set(section,key,value)
-        files = open("./datahelper.ini",'w+')
+        parser.set(section, key, value)
+        files = open("./datahelper.ini", 'w+')
         parser.write(files)
         files.close()
 
-    def get_element_text_byindex_xpath(self,locator,index):
+    def get_element_text_byindex_xpath(self, locator, index):
         elements = self.driver.find_elements_by_xpath(locator)
 
+        print("Element_text_by_index_xpath : {}".format(elements[index].text))
         return elements[index].text
+
+    def close_window(self):
+        self.driver.close()
+        print("Window is Closed")

@@ -57,6 +57,17 @@ class TestData:
     meeting_title = "demo_"+str(current_hour)
     meeting_title_homepage_xpath = "//div[text()="+meeting_title+"]"
 
+    # Audio video mute unmute
+    unmute_audio_btn_xpath = "//div[@aria-label='Toggle mute audio']//div[@class='toolbox-icon  ']"
+    non_video_btn_xpath = "//div[@aria-label='Toggle mute video']//div[contains(@class,'toolbox-icon  ')]"
+
+    mute_audio_btn_xpath = "//div[@aria-label='Toggle mute audio']//div[contains(@class,'toolbox-icon toggled')]"
+    mute_video_btn_xpath = "//div[@aria-label='Toggle mute video']//div[contains(@class,'toolbox-icon toggled')]"
+
+    class_value_for_unmute = "toolbox-icon  "  # do not remove spaces
+    class_value_for_mute = "toolbox-icon toggled "
+
+
     #WEBRTC LOCATORS
     webrtc_url = "chrome://webrtc-internals/"
     tab_heads_xpath = "//span[@class='tab-head']"
@@ -67,6 +78,7 @@ class TestData:
     tab_video_height = "//tr[contains(@id,'RTCVideoSource')][5]/td[2]"
     VideoOutboundhead = "//summary[contains(text(),'RTCOutboundRTPVideoStream')]"
     tab_videobytes_persec = "//tr[contains(@id,'RTCOutboundRTPVideoStream')][19]/td[2]"
+    tab_videobytes_persec_after_off = "//table[contains(@id , 'table-RTCOutboundRTPVideoStream')]/tbody/tr[contains(@id,'-[bytesSent/s]')]/td[2]"
 
 
 
