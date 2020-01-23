@@ -163,6 +163,26 @@ class TestPage(Assertions):
     def get_audio_video_qulity(self):
         self.setup()
         self.pause(8)
-        resolution, frame_rate = self.get_connection_info()
+        connection_level, bitrate, packet_loss, resolution, frame_rate = self.get_connection_info()
         assert str(resolution) != "N/A"
         assert str(frame_rate) != "N/A"
+        self.pause(5)
+        self.open_new_tab()
+        self.switch_to_window(1)
+        self.pause(3)
+        self.openURL(td.webrtc_url)
+        self.pause(5)
+        self.clickElementByXPATH(td.audiosourcehead)
+        self.pause(2)
+        audLEVEL = self.get_element_text_byindex_xpath(td.tab_audio_level, 0)
+        print(audLEVEL)
+        assert float(audLEVEL) != 0.0
+        self.pause(2)
+        self.clickElementByXPATH(td.VideoOutboundhead)
+        vdobitrate = self.get_element_text_byindex_xpath(td.tab_videobytes_persec, 0)
+        print(vdobitrate)
+        assert float(vdobitrate) != 0.0
+        self.pause(2)
+        self.switch_to_window(0)
+        self.teardown()
+
