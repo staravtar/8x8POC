@@ -153,14 +153,14 @@ class TestPage(Assertions):
         self.update_data_in_testdatafile("TestDataSection", "VIDEOWIDTH", vdoweight)
         self.pause(2)
         self.clickElementByXPATH(td.VideoOutboundhead)
-        vdobitrate = self.get_element_text_byindex_xpath(td.tab_videobytes_persec, 0)
+        vdobitrate = self.get_element_text_byindex_xpath(td.tab_videobytes_persec_after_off, 0)
         print(vdobitrate)
         self.update_data_in_testdatafile("TestDataSection", "VIDEOBITRATE", vdobitrate)
         self.pause(2)
         self.switch_to_window(0)
         self.teardown()
 
-    def get_audio_video_qulity(self):
+    def get_audio_video_quality(self):
         self.setup()
         self.pause(8)
         connection_level, bitrate, packet_loss, resolution, frame_rate = self.get_connection_info()
@@ -186,3 +186,64 @@ class TestPage(Assertions):
         self.switch_to_window(0)
         self.teardown()
 
+
+    def data_from_webRtc(self):
+        """
+        Precondition : The user should be on call page and other user should have joined the call
+        Function work : This function return AUDIO LEVEL and VIDEO RATE
+        """
+        self.open_new_tab()
+        self.switch_to_window(1)
+        self.pause(1)
+        self.openURL(td.webrtc_url)
+        self.pause(3)
+        self.clickElementByXPATH(td.audiosourcehead)
+        self.pause(2)
+        audLEVEL = self.get_element_text_byindex_xpath(td.tab_audio_level, 0)
+        self.pause(2)
+        self.clickElementByXPATH(td.VideoOutboundhead)
+        self.pause(2)
+        vdobitrate = self.get_element_text_byindex_xpath(td.tab_videobytes_persec_after_off, 0)
+        self.close_window()
+        return audLEVEL, vdobitrate
+
+    def audio_video_mute_unmute(self):
+        self.setup()
+        self.pause(8)
+        self.clickElementByXPATH(td.Log_in_button_xpath)
+        self.typeTextByXPath(td.user_name, td.Email_box_xpath)
+        self.typeTextByXPath(td.password, td.Pwd_box_xpath)
+        self.clickElementByXPATH(td.log_in_xpath)
+        self.pause(10)
+        self.clickElementByXPATH(td.start_button_xpath)
+        self.pause(15)
+        self.switch_to_iframe_using_css(td.iframe_css)
+        self.pause(2)
+        class_audio_unmute = self.isElementPresentByXPATH(td.unmute_audio_btn_xpath)
+        class_video_unmute = self.isElementPresentByXPATH(td.non_video_btn_xpath)
+        self.pause(2)
+        audLEVEL, vdobitrate = self.data_from_webRtc()
+        self.switch_to_window(0)
+        self.pause(2)
+        self.switch_to_iframe_using_css(td.iframe_css)
+        self.pause(1)
+        self.clickElementByXPATH(td.unmute_audio_btn_xpath)
+        self.clickElementByXPATH(td.non_video_btn_xpath)
+        self.pause(1)
+        class_audio_mute = self.isElementPresentByXPATH(td.mute_audio_btn_xpath)
+        class_video_mute = self.isElementPresentByXPATH(td.mute_video_btn_xpath)
+        self.pause(2)
+        audLEVEL1, vdobitrate1 = self.data_from_webRtc()
+        self.switch_to_window(0)
+        self.pause(2)
+        assert class_audio_unmute is True
+        assert class_video_unmute is True
+        assert float(audLEVEL) > 0
+        assert float(vdobitrate) > 0
+        assert class_audio_mute is True
+        assert class_video_mute is True
+        assert int(audLEVEL1) is 0
+        assert int(vdobitrate1) is 0
+        self.teardown()
+
+     
