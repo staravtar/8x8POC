@@ -9,7 +9,7 @@ class TestData:
     log_in_xpath = "//button[@name = 'submit' and @aria-label = 'Log In']"
     enter_name_meeting_joining_xpath = "//input[@name='displayName']"
     button_to_setName = "//button[@class='sc-bwzfXH iuZaWk']"
-    user_name = "ayush.andalpha@gmail.com"
+    user_name = "ayush.andprod@gmail.com"
     password = "Tester@123"
     user_name_1 = "ayush.andprod@gmail.com"
 
@@ -44,7 +44,8 @@ class TestData:
     meeting_title = "demo_" + str(current_hour)
     meeting_title_homepage_xpath = "//div[text()=" + meeting_title + "]"
 
-    my_call_box_xpath = "//span[text()='ayush.andalpha@gmail.com (me)']"
+    #my_call_box_xpath = "//span[text()='ayush.andprod@gmail.com (me)']"
+    my_call_box_xpath = "//span[contains(text(),'(me)')]"
     states_icon_xpath = "//div[@class='indicator-container show-connection-indicator' and @id]"
     connection_info_container_xpath = "//table[@class='connection-info__container]"
     iframe_css = "iframe#jitsiConferenceFrame0"
