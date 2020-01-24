@@ -4,6 +4,7 @@ from testdata import TestData as td
 import win32com.shell.shell as shell
 from time import sleep
 
+
 class TestPage(Assertions):
 
     def login(self):
@@ -254,7 +255,7 @@ class TestPage(Assertions):
         self.pause(2)
         self.clickElementByXPATH(td.tab_videobytes_persec)
         self.pause(2)
-        vdobitrate = self.get_element_text_byindex_xpath(td.tab_videobytes_persec_after_off, 0)
+        vdobitrate = self.getElementTextByXpath(td.tab_videobytes_persec_after_off)
         self.close_window()
         return audLEVEL, vdobitrate
 
@@ -286,7 +287,16 @@ class TestPage(Assertions):
         self.pause(2)
         audLEVEL1, vdobitrate1 = self.data_from_webRtc()
         self.switch_to_window(0)
-        self.pause(2)
+        self.pause(1)
+        self.switch_to_iframe_using_css(td.iframe_css)
+        self.pause(1)
+        self.clickElementByXPATH(td.mute_audio_btn_xpath)
+        self.pause(1)
+        self.clickElementByXPATH(td.mute_video_btn_xpath)
+        self.pause(4)
+        audLEVEL2, vdobitrate2 = self.data_from_webRtc()
+        self.switch_to_window(0)
+        self.pause(1)
         assert class_audio_unmute is True
         assert class_video_unmute is True
         assert float(audLEVEL) > 0
@@ -295,8 +305,9 @@ class TestPage(Assertions):
         assert class_video_mute is True
         assert int(audLEVEL1) is 0
         assert int(vdobitrate1) is 0
+        assert float(audLEVEL2) > 0
+        assert float(vdobitrate2) > 0
         self.teardown()
-
 
     def packet_loss(self):
         self.setup()
@@ -318,7 +329,7 @@ class TestPage(Assertions):
         resolution = self.getElementTextByXpath(td.resolution_xpath)
         print(self.calculate_screensize(resolution))
         res_v1 = self.calculate_screensize(resolution)
-        commands = str(self.read_data_fromfile("TestDataSection","clumzy_cmd_run"))
+        commands = str(self.read_data_fromfile("TestDataSection", "clumzy_cmd_run"))
         shell.ShellExecuteEx(lpVerb='runas', lpFile='cmd.exe', lpParameters='/c ' + commands)
         self.pause(15)
         self.pause(2)
@@ -343,4 +354,3 @@ class TestPage(Assertions):
         res_v3 = self.calculate_screensize(resolution)
         assert res_v2 < res_v3
         self.teardown()
-

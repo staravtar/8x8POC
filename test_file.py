@@ -19,7 +19,7 @@ class Test(object):
         """This case join the call from available meeting and for this calender should be synced"""
         self.ts.join_call()
 
-    @pytest.mark.sync_calender
+    @pytest.mark.test
     def test_sync_calender(self):
         """This case sync the calender of user to 8x8 account and create new meeting"""
         self.ts.calender_sync()
@@ -28,17 +28,17 @@ class Test(object):
     def test_check_webRTC_Data(self):
         self.ts.fetch_webrtc_data()
 
-    @pytest.mark.audio_video_quality
+    @pytest.mark.test
     def test_audio_video(self):
         """This case check audio and video quality"""
         self.ts.get_audio_video_quality()
 
-    @pytest.mark.av_mute_unmute
+    @pytest.mark.test
     def test_audio_vdo_mute_unmute(self):
         """This case check audio and video mute and unmute """
         self.ts.audio_video_mute_unmute()
 
-    @pytest.mark.check_packet_loss
+    @pytest.mark.test
     def test_packet_loss(self):
         self.ts.packet_loss()
 
