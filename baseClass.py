@@ -573,3 +573,8 @@ class SeleniumWebdriverBase:
     def close_window(self):
         self.driver.close()
         print("Window is Closed")
+
+    def calculate_screensize(self,res="100X100"):
+        wxh=res.split("x")
+
+        return int(wxh[0])*int(wxh[1])

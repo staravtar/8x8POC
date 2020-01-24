@@ -1,7 +1,8 @@
 from assertionsClass import Assertions
 from baseClass import SeleniumWebdriverBase
 from testdata import TestData as td
-
+import win32com.shell.shell as shell
+from time import sleep
 
 class TestPage(Assertions):
 
@@ -244,6 +245,53 @@ class TestPage(Assertions):
         assert class_video_mute is True
         assert int(audLEVEL1) is 0
         assert int(vdobitrate1) is 0
+        self.teardown()
+
+    def packet_loss(self):
+        self.setup()
+        self.pause(8)
+        self.clickElementByXPATH(td.Log_in_button_xpath)
+        self.typeTextByXPath(td.user_name, td.Email_box_xpath)
+        self.pause(2)
+        self.typeTextByXPath(td.password, td.Pwd_box_xpath)
+        self.clickElementByXPATH(td.log_in_xpath)
+        self.pause(8)
+        self.clickElementByXPATH(td.start_button_xpath)
+
+        self.pause(15)
+        self.switch_to_iframe_using_css(td.iframe_css)
+        self.pause(2)
+        self.clickElementByXPATH(td.my_call_box_xpath)
+        self.pause(3)
+        self.clickElementByXPATH(td.states_icon_xpath)
+        self.pause(2)
+        resolution = self.getElementTextByXpath(td.resolution_xpath)
+        print(self.calculate_screensize(resolution))
+        res_v1 = self.calculate_screensize(resolution)
+        commands = str(self.read_data_fromfile("TestDataSection","clumzy_cmd_run"))
+        shell.ShellExecuteEx(lpVerb='runas', lpFile='cmd.exe', lpParameters='/c ' + commands)
+        self.pause(15)
+        self.pause(2)
+        self.clickElementByXPATH(td.my_call_box_xpath)
+        self.pause(3)
+        self.clickElementByXPATH(td.states_icon_xpath)
+        self.pause(2)
+        resolution = self.getElementTextByXpath(td.resolution_xpath)
+        print(self.calculate_screensize(resolution))
+        res_v2 = self.calculate_screensize(resolution)
+        assert res_v1 > res_v2
+        self.pause(2)
+        shell.ShellExecuteEx(lpVerb='runas', lpFile='cmd.exe', lpParameters='/c taskkill /f /im clumsy.exe*')
+        self.pause(15)
+        self.pause(2)
+        self.clickElementByXPATH(td.my_call_box_xpath)
+        self.pause(3)
+        self.clickElementByXPATH(td.states_icon_xpath)
+        self.pause(2)
+        resolution = self.getElementTextByXpath(td.resolution_xpath)
+        print(self.calculate_screensize(resolution))
+        res_v3 = self.calculate_screensize(resolution)
+        assert res_v2 < res_v3
         self.teardown()
 
      
