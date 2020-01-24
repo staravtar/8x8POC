@@ -3,6 +3,7 @@ from baseClass import SeleniumWebdriverBase
 from testdata import TestData as td
 import win32com.shell.shell as shell
 from time import sleep
+import os
 
 
 class TestPage(Assertions):
@@ -325,14 +326,14 @@ class TestPage(Assertions):
         self.clickElementByXPATH(td.my_call_box_xpath)
         self.pause(3)
         self.clickElementByXPATH(td.states_icon_xpath)
-        self.pause(2)
+        self.pause(5)
         resolution = self.getElementTextByXpath(td.resolution_xpath)
         print(self.calculate_screensize(resolution))
         res_v1 = self.calculate_screensize(resolution)
-        commands = str(self.read_data_fromfile("TestDataSection", "clumzy_cmd_run"))
+        commands = str(os.path.abspath('clumsy-0.2-win64/clumsy.exe')+ " " + self.read_data_fromfile("TestDataSection","clumzy_cmd_run"))
         shell.ShellExecuteEx(lpVerb='runas', lpFile='cmd.exe', lpParameters='/c ' + commands)
         self.pause(15)
-        self.pause(2)
+
         self.clickElementByXPATH(td.my_call_box_xpath)
         self.pause(3)
         self.clickElementByXPATH(td.states_icon_xpath)
