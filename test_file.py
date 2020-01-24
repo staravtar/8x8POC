@@ -2,9 +2,11 @@ import pytest
 from page import TestPage
 from assertionsClass import Assertions
 from testdata import TestData as td
+import cmd_test
+from time import sleep
 
 
-class Test:
+class Test(object):
     ts = TestPage()
     assertion = Assertions()
 
@@ -24,7 +26,6 @@ class Test:
     def test_check_webRTC_Data(self):
         self.ts.fetch_webrtc_data()
 
-
     @pytest.mark.audio_video_quality
     def test_audio_video(self):
         self.ts.get_audio_video_quality()
@@ -32,3 +33,8 @@ class Test:
     @pytest.mark.av_mute_unmute
     def test_audio_vdo_mute_unmute(self):
         self.ts.audio_video_mute_unmute()
+
+    @pytest.mark.check_packet_loss
+    def test_packet_loss(self):
+        self.ts.packet_loss()
+
