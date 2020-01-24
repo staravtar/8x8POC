@@ -16,10 +16,12 @@ class Test(object):
 
     @pytest.mark.join_call
     def test_join_call(self):
+        """This case join the call from available meeting and for this calender should be synced"""
         self.ts.join_call()
 
     @pytest.mark.sync_calender
     def test_sync_calender(self):
+        """This case sync the calender of user to 8x8 account and create new meeting"""
         self.ts.calender_sync()
 
     @pytest.mark.rtc_data_check
@@ -28,10 +30,12 @@ class Test(object):
 
     @pytest.mark.audio_video_quality
     def test_audio_video(self):
+        """This case check audio and video quality"""
         self.ts.get_audio_video_quality()
 
     @pytest.mark.av_mute_unmute
     def test_audio_vdo_mute_unmute(self):
+        """This case check audio and video mute and unmute """
         self.ts.audio_video_mute_unmute()
 
     @pytest.mark.check_packet_loss

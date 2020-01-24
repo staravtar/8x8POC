@@ -18,7 +18,7 @@ class TestData:
     start_button_xpath = "//button[@data-id = 'BUTTON' and text()='Start']"
     large_video_xpath = "//video[@id='largeVideo']"
     sync_calender_xpath = "//button[@data-id='BUTTON' and text()='Sync Calendar']"
-    setting_btn_xpath = "//div[@class='sc-crNyjn jsYGEv']"
+    setting_btn_css = "svg.sc-htpNat.byYkqd"
     calender_and_schedule_xpath = "//div[text()='Calendar & Scheduling']"
     delete_mail_xpath = "//*[@class = 'sc-jGxEUC lpvsxK sc-htpNat kfxoqY']"
 
@@ -42,7 +42,7 @@ class TestData:
     save_button = "//span[text()='Save']"
 
     meeting_title = "demo_" + str(current_hour)
-    meeting_title_homepage_xpath = "//div[text()=" + meeting_title + "]"
+    meeting_title_homepage_xpath = "//div[contains(text(),{})]".format(meeting_title)
 
     #my_call_box_xpath = "//span[text()='ayush.andprod@gmail.com (me)']"
     my_call_box_xpath = "//span[contains(text(),'(me)')]"
@@ -81,7 +81,8 @@ class TestData:
     tab_videobytes_persec = "//tr[contains(@id,'RTCOutboundRTPVideoStream')][19]/td[2]"
     tab_videobytes_persec_after_off = "//table[contains(@id , 'table-RTCOutboundRTPVideoStream')]/tbody/tr[contains(@id,'-[bytesSent/s]')]/td[2]"
 
-
-
+    vdo_track_sender_xpath = "//summary[contains(text(),'RTCMediaStreamTrack_sender_2 (track)')]"
+    vdo_farme_width_xpath = "// table[contains( @ id, 'table-RTCMediaStreamTrack_sender_2')]/tbody/tr[9]/td[2]"
+    vdo_frame_hight_xpath = "//table[contains(@id,'table-RTCMediaStreamTrack_sender_2')]/tbody/tr[10]/td[2]"
 
 

@@ -35,7 +35,9 @@ class TestPage(Assertions):
         self.teardown()
 
     def delete_calender_sync(self):
-        self.clickElementByXPATH(td.setting_btn_xpath)
+        self.switch_to_window(0)
+        self.pause(1)
+        self.clickElementByLocator(td.setting_btn_css)
         self.pause(2)
         self.clickElementByXPATH(td.calender_and_schedule_xpath)
         self.pause(2)
@@ -87,12 +89,21 @@ class TestPage(Assertions):
         self.switch_to_window(0)
         self.pause(2)
         self.refresh()
-        self.pause(5)
+        self.pause(6)
         is_title_present = self.isElementPresentByXPATH(td.meeting_title_homepage_xpath)
+        self.pause(8)
+        self.clickElementByXPATH(td.join_button_xpath)
         self.pause(2)
-        self.delete_calender_sync()
+        self.clickElementByXPATH(td.join_button_xpath)
+        self.pause(15)
+        self.switch_to_iframe_using_css(td.iframe_css)
+        self.pause(2)
+        is_large_video = self.isElementPresentByXPATH(td.large_video_xpath)
+        self.pause(2)
+        assert True == is_large_video
         assert True == is_event_present
-        assert True == is_title_present
+        # assert True == is_title_present
+        self.delete_calender_sync()
         self.teardown()
 
     def get_connection_info(self):
@@ -161,32 +172,57 @@ class TestPage(Assertions):
         self.switch_to_window(0)
         self.teardown()
 
+    def vdo_width_height_webRtc(self):
+        """
+        Precondition : The user should be on call page and other user should have joined the call
+        Function work : This function return AUDIO LEVEL and VIDEO RATE
+        """
+        self.open_new_tab()
+        self.switch_to_window(1)
+        self.pause(1)
+        self.openURL(td.webrtc_url)
+        self.pause(3)
+        self.clickElementByXPATH(td.audiosourcehead)
+        self.pause(2)
+        audLEVEL = self.get_element_text_byindex_xpath(td.tab_audio_level, 0)
+        self.pause(2)
+        self.clickElementByXPATH(td.VideoOutboundhead)
+        self.pause(2)
+        vdobitrate = self.get_element_text_byindex_xpath(td.tab_videobytes_persec_after_off, 0)
+        self.close_window()
+        return audLEVEL, vdobitrate
+
     def get_audio_video_quality(self):
         self.setup()
         self.pause(8)
         connection_level, bitrate, packet_loss, resolution, frame_rate = self.get_connection_info()
         assert str(resolution) != "N/A"
         assert str(frame_rate) != "N/A"
-        self.pause(5)
+        self.pause(2)
         self.open_new_tab()
         self.switch_to_window(1)
         self.pause(3)
         self.openURL(td.webrtc_url)
         self.pause(5)
+        self.clickElementByXPATH(td.vdo_track_sender_xpath)
+        vdo_width = self.getElementTextByXpath(td.vdo_farme_width_xpath)
+        self.pause(1)
+        vdo_height = self.getElementTextByXpath(td.vdo_frame_hight_xpath)
+        self.pause(2)
         self.clickElementByXPATH(td.audiosourcehead)
         self.pause(2)
         audLEVEL = self.get_element_text_byindex_xpath(td.tab_audio_level, 0)
-        print(audLEVEL)
-        assert float(audLEVEL) != 0.0
         self.pause(2)
         self.clickElementByXPATH(td.VideoOutboundhead)
         vdobitrate = self.get_element_text_byindex_xpath(td.tab_videobytes_persec, 0)
-        print(vdobitrate)
+        assert float(audLEVEL) != 0.0
         assert float(vdobitrate) != 0.0
+        assert str(resolution).split('x')[0] == vdo_width
+        assert str(resolution).split('x')[1] == vdo_height
         self.pause(2)
         self.switch_to_window(0)
+        self.pause(2)
         self.teardown()
-
 
     def data_from_webRtc(self):
         """
@@ -247,6 +283,7 @@ class TestPage(Assertions):
         assert int(vdobitrate1) is 0
         self.teardown()
 
+
     def packet_loss(self):
         self.setup()
         self.pause(8)
@@ -257,7 +294,6 @@ class TestPage(Assertions):
         self.clickElementByXPATH(td.log_in_xpath)
         self.pause(8)
         self.clickElementByXPATH(td.start_button_xpath)
-
         self.pause(15)
         self.switch_to_iframe_using_css(td.iframe_css)
         self.pause(2)
@@ -294,4 +330,3 @@ class TestPage(Assertions):
         assert res_v2 < res_v3
         self.teardown()
 
-     
