@@ -165,6 +165,10 @@ class TestPage(Assertions):
         self.update_data_in_testdatafile("TestDataSection", "VIDEOWIDTH", vdoweight)
         self.pause(2)
         self.clickElementByXPATH(td.VideoOutboundhead)
+        self.pause(2)
+        self.clickElementByXPATH(td.tab_videobytes_persec)
+        self.pause(2)
+        #self.scroll_down(td.VideoOutboundhead)
         vdobitrate = self.get_element_text_byindex_xpath(td.tab_videobytes_persec_after_off, 0)
         print(vdobitrate)
         self.update_data_in_testdatafile("TestDataSection", "VIDEOBITRATE", vdobitrate)
@@ -187,8 +191,13 @@ class TestPage(Assertions):
         audLEVEL = self.get_element_text_byindex_xpath(td.tab_audio_level, 0)
         self.pause(2)
         self.clickElementByXPATH(td.VideoOutboundhead)
+        #self.scroll_down(td.VideoOutboundhead)
         self.pause(2)
+
         vdobitrate = self.get_element_text_byindex_xpath(td.tab_videobytes_persec_after_off, 0)
+        self.pause(2)
+        self.clickElementByXPATH(td.tab_videobytes_persec)
+        self.pause(2)
         self.close_window()
         return audLEVEL, vdobitrate
 
@@ -214,6 +223,9 @@ class TestPage(Assertions):
         audLEVEL = self.get_element_text_byindex_xpath(td.tab_audio_level, 0)
         self.pause(2)
         self.clickElementByXPATH(td.VideoOutboundhead)
+        self.pause(2)
+        self.clickElementByXPATH(td.tab_videobytes_persec)
+        self.pause(2)
         vdobitrate = self.get_element_text_byindex_xpath(td.tab_videobytes_persec, 0)
         assert float(audLEVEL) != 0.0
         assert float(vdobitrate) != 0.0
@@ -239,6 +251,8 @@ class TestPage(Assertions):
         audLEVEL = self.get_element_text_byindex_xpath(td.tab_audio_level, 0)
         self.pause(2)
         self.clickElementByXPATH(td.VideoOutboundhead)
+        self.pause(2)
+        self.clickElementByXPATH(td.tab_videobytes_persec)
         self.pause(2)
         vdobitrate = self.get_element_text_byindex_xpath(td.tab_videobytes_persec_after_off, 0)
         self.close_window()
