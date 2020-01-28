@@ -92,7 +92,7 @@ class TestPage(Assertions):
             self.pause(3)
             self.close_window()
             self.switch_to_window(0)
-            self.pause(2)
+            self.pause(3)
             self.refresh()
             self.pause(8)
             self.clickElementByXPATH(td.join_button_xpath)
@@ -113,29 +113,18 @@ class TestPage(Assertions):
             self.pause(1)
             packet_loss = self.getElementTextByXpath(td.packet_loss_xpath)
             self.pause(1)
-            resolution = self.getElementTextByXpath(td.resolution_xpath)
+            resolution1 = self.getElementTextByXpath(td.resolution_xpath)
             self.pause(1)
-            frame_rate = self.getElementTextByXpath(td.frame_rate_xpath)
+            frame_rate1 = self.getElementTextByXpath(td.frame_rate_xpath)
             self.pause(1)
-            assert str(resolution) != "N/A"
-            assert str(frame_rate) != "N/A"
+            assert str(resolution1) != "N/A"
+            assert str(frame_rate1) != "N/A"
             self.pause(1)
             self.open_new_tab()
             self.switch_to_window(1)
             self.pause(1)
             self.openURL(td.webrtc_url)
             self.pause(5)
-            self.clickElementByXPATH(td.vdo_track_sender_xpath)
-            self.highlightByXpath(td.vdo_track_sender_xpath)
-            self.pause(1)
-            self.clickElementByXPATH(td.vdo_farme_width_xpath)
-            vdo_width = self.getElementTextByXpath(td.vdo_farme_width_xpath)
-            self.highlightByXpath(td.vdo_farme_width_xpath)
-            self.pause(1)
-            self.clickElementByXPATH(td.vdo_frame_hight_xpath)
-            vdo_height = self.getElementTextByXpath(td.vdo_frame_hight_xpath)
-            self.highlightByXpath(td.vdo_frame_hight_xpath)
-            self.pause(2)
             self.clickElementByXPATH(td.VideoOutboundhead)
             self.highlightByXpath(td.VideoOutboundhead)
             self.pause(2)
@@ -144,6 +133,18 @@ class TestPage(Assertions):
             self.pause(2)
             vdobitrate0 = self.get_element_text_byindex_xpath(td.tab_videobytes_persec, 0)
             self.highlightByXpath(td.tab_videobytes_persec)
+            self.pause(2)
+            self.clickElementByXPATH(td.vdo_track_sender_xpath)
+            self.highlightByXpath(td.vdo_track_sender_xpath)
+            self.pause(2)
+            self.clickElementByXPATH(td.vdo_farme_width_xpath)
+            self.pause(1)
+            self.highlightByXpath(td.vdo_farme_width_xpath)
+            self.pause(3)
+            vdo_width = self.getElementTextByXpath(td.vdo_farme_width_xpath)
+            self.pause(1)
+            self.clickElementByXPATH(td.vdo_frame_hight_xpath)
+            vdo_height = self.getElementTextByXpath(td.vdo_frame_hight_xpath)
             self.pause(2)
             self.clickElementByXPATH(td.audiosourcehead)
             self.highlightByXpath(td.audiosourcehead)
@@ -162,26 +163,25 @@ class TestPage(Assertions):
             self.pause(2)
             resolution = self.getElementTextByXpath(td.resolution_xpath)
             res_v1 = self.calculate_screensize(resolution)
+            self.pause(1)
             commands = str(
                 os.path.abspath('clumsy-0.2-win64/clumsy.exe') + " " + self.read_data_fromfile("TestDataSection",
                                                                                                "clumzy_cmd_run"))
             shell.ShellExecuteEx(lpVerb='runas', lpFile='cmd.exe', lpParameters='/c ' + commands)
             self.pause(20)
-
             self.clickElementByXPATH(td.my_call_box_xpath)
-            self.pause(2)
+            self.pause(1)
             self.clickElementByXPATH(td.states_icon_xpath)
-            self.pause(2)
+            self.pause(5)
             resolution = self.getElementTextByXpath(td.resolution_xpath)
             res_v2 = self.calculate_screensize(resolution)
             self.pause(2)
             shell.ShellExecuteEx(lpVerb='runas', lpFile='cmd.exe', lpParameters='/c taskkill /f /im clumsy.exe*')
             self.pause(20)
-            self.pause(2)
             self.clickElementByXPATH(td.my_call_box_xpath)
-            self.pause(2)
+            self.pause(1)
             self.clickElementByXPATH(td.states_icon_xpath)
-            self.pause(2)
+            self.pause(5)
             resolution = self.getElementTextByXpath(td.resolution_xpath)
             res_v3 = self.calculate_screensize(resolution)
             self.pause(2)
@@ -219,8 +219,8 @@ class TestPage(Assertions):
             assert res_v2 < res_v3
             assert float(audLEVEL0) != 0.0
             assert float(vdobitrate0) != 0.0
-            assert str(resolution).split('x')[0] == vdo_width
-            assert str(resolution).split('x')[1] == vdo_height
+            assert str(resolution1).split('x')[0] == vdo_width
+            assert str(resolution1).split('x')[1] == vdo_height
             assert True == is_large_video
             assert True == is_event_present
             # assert True == is_title_present

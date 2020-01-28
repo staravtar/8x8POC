@@ -9,9 +9,9 @@ class TestData:
     log_in_xpath = "//button[@name = 'submit' and @aria-label = 'Log In']"
     enter_name_meeting_joining_xpath = "//input[@name='displayName']"
     button_to_setName = "//button[@class='sc-bwzfXH iuZaWk']"
-    user_name = "harman8x8@gmail.com"
+    user_name = "harman8x8poc@gmail.com"
     password = "Harman@123"
-    user_name_1 = "harman8x8@gmail.com"
+    user_name_1 = "harman8x8poc@gmail.com"
 
     # Home page locators
     join_button_xpath = "//div[@class='sc-LKuAh AkHBX'][1]"
@@ -55,7 +55,7 @@ class TestData:
     resolution_xpath = "//table[@class='connection-info__container']/tbody/tr[4]/td[2]"
     frame_rate_xpath = "//table[@class='connection-info__container']/tbody/tr[5]/td[2]"
 
-    meeting_title = "demo_"+str(current_hour)
+    meeting_title = "Harman8x8_"+str(current_hour)
     meeting_title_homepage_xpath = "//div[text()="+meeting_title+"]"
 
     # Audio video mute unmute
