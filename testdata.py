@@ -9,9 +9,9 @@ class TestData:
     log_in_xpath = "//button[@name = 'submit' and @aria-label = 'Log In']"
     enter_name_meeting_joining_xpath = "//input[@name='displayName']"
     button_to_setName = "//button[@class='sc-bwzfXH iuZaWk']"
-    user_name = "ayush.andprod@gmail.com"
-    password = "Tester@123"
-    user_name_1 = "ayush.andprod@gmail.com"
+    user_name = "harman8x8@gmail.com"
+    password = "Harman@123"
+    user_name_1 = "harman8x8@gmail.com"
 
     # Home page locators
     join_button_xpath = "//div[@class='sc-LKuAh AkHBX'][1]"

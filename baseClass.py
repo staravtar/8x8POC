@@ -44,14 +44,6 @@ class SeleniumWebdriverBase:
         title = self.driver.title
         self.driver.maximize_window()
 
-    def teardown(self):
-        """
-        teardown webdriver
-        :param none
-        """
-
-        self.driver.quit()
-
     def open_custom_uri(self, uri):
 
         opt = Options()
@@ -68,6 +60,13 @@ class SeleniumWebdriverBase:
         self.driver = webdriver.Chrome(executable_path="./chromedriver77.exe", options=opt, )
         self.driver.get(uri)
         title = self.driver.title
+
+    def teardown(self):
+        """
+        teardown webdriver
+        :param none
+        """
+        self.driver.quit()
 
     def pause(self, timeInSeconds):
         """
@@ -574,7 +573,20 @@ class SeleniumWebdriverBase:
         self.driver.close()
         print("Window is Closed")
 
-    def calculate_screensize(self,res="100X100"):
-        wxh=res.split("x")
+    def calculate_screensize(self, res="100X100"):
+        wxh = res.split("x")
 
-        return int(wxh[0])*int(wxh[1])
+        return int(wxh[0]) * int(wxh[1])
+
+    def highlightByXpath(self, xpath):
+        """Highlights a Selenium webdriver element"""
+        element = self.driver.find_element_by_xpath(xpath=xpath)
+
+        def apply_style(s):
+            self.driver.execute_script("arguments[0].setAttribute('style', arguments[1])", element, s)
+
+        orignal_style = element.get_attribute('style')
+        apply_style("border: 4px solid yellow")
+        if element.get_attribute("style") is not None:
+            time.sleep(3)
+        apply_style(orignal_style)
