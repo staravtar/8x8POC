@@ -42,3 +42,13 @@ class Test(object):
     def test_packet_loss(self):
         self.ts.packet_loss()
 
+    @pytest.mark.test3
+    def test_all(self):
+        try:
+            self.ts.master_test_case()
+            print("Test Case Passed")
+        except :
+            print("Test Case Failed")
+            self.ts.teardown_page()
+
+
