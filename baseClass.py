@@ -15,6 +15,8 @@ from selenium.webdriver import ActionChains
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.remote.webelement import WebElement
 from configparser import ConfigParser
+import pyauto
+import pyautogui
 
 
 class SeleniumWebdriverBase:
@@ -31,12 +33,19 @@ class SeleniumWebdriverBase:
         """
         setup webdriver
         :param none"""
+
+        opt = Options()
+        opt.add_argument("--disable-infobars")
+        opt.add_argument("start-maximized")
+        opt.add_argument("--disable-extensions")
+        opt.add_argument("--enable-usermedia-screen-capturing")
         # Pass the argument 1 to allow and 2 to block
         opt.add_experimental_option("prefs", { \
             "profile.default_content_setting_values.media_stream_mic": 1,
             "profile.default_content_setting_values.media_stream_camera": 1,
             "profile.default_content_setting_values.geolocation": 1,
-            "profile.default_content_setting_values.notifications": 1})
+            "profile.default_content_setting_values.notifications": 1
+        })
 
         self.driver = webdriver.Chrome(chrome_options=opt, executable_path="./chromedriver77.exe")
         self.driver.get(self.BASE_URL)
@@ -58,6 +67,7 @@ class SeleniumWebdriverBase:
         opt.add_argument("--disable-infobars")
         opt.add_argument("start-maximized")
         opt.add_argument("--disable-extensions")
+        opt.add_argument("--enable-usermedia-screen-capturing")
         # Pass the argument 1 to allow and 2 to block
         opt.add_experimental_option("prefs", { \
             "profile.default_content_setting_values.media_stream_mic": 1,
@@ -578,3 +588,19 @@ class SeleniumWebdriverBase:
         wxh=res.split("x")
 
         return int(wxh[0])*int(wxh[1])
+
+    def send_keys_function(self,locator,key):
+
+
+        #ActionChains(self.driver).send_keys(Keys.F11).perform()
+        if key == "TAB":
+            pyautogui.press('tab')
+        if key == "RETURN":
+            pyautogui.press('enter')
+        if key == "RIGHT":
+            pyautogui.press('right')
+        if key == "DOWN":
+            pyautogui.press('down')
+
+
+        print("driver pressed {} key ".format(key))

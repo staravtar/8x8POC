@@ -21,6 +21,7 @@ class TestData:
     setting_btn_css = "svg.sc-htpNat.byYkqd"
     calender_and_schedule_xpath = "//div[text()='Calendar & Scheduling']"
     delete_mail_xpath = "//*[@class = 'sc-jGxEUC lpvsxK sc-htpNat kfxoqY']"
+    sharescreen_xpath = "//div[@aria-label='Toggle screenshare']"
 
     # google page locators
     google_app_xpath = "//a[@aria-label= 'Google apps']"
